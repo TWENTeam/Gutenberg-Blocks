@@ -1,0 +1,27 @@
+{
+  "name": "npm-scope",
+  "version": "1.0.0",
+  "scripts": {
+    "scss": "node-sass --output-style compressed -o assets/css assets/scss/main.scss",
+    "autoprefixer": "postcss -u autoprefixer --autoprefixer.browsers '> 5%, ie 9' -r assets/css/*",
+    "uglify": "mkdir -p assets/js && uglifyjs assets/js/vendor/*.js -m -o assets/js/bundle.js && uglifyjs assets/js/bundle.js -m -c -o assets/js/bundle.min.js",
+    "serve": "browser-sync start --server --files ' assets/css/*.css, assets/js/*.js'",
+    "build:css": "npm run scss && npm run autoprefixer",
+    "build:js": "npm run uglify",
+    "build:all": "npm run build:css && npm run build:js",
+    "watch:css": "onchange 'assets/scss/main.scss' -- npm run build:css",
+    "watch:js": "onchange 'assets/js/*.js' -- npm run build:js",
+    "watch:all": "parallelshell 'npm run serve' 'npm run watch:css' 'npm run watch:js'",
+    "postinstall": "npm run watch:all"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "browser-sync": "^2.27.7",
+    "eslint": "^8.1.0",
+    "node-sass": "^6.0.1",
+    "onchange": "^7.1.0",
+    "parallelshell": "^3.0.2",
+    "postcss-cli": "^9.0.1",
+    "uglify-js": "^3.14.2"
+  }
+}
